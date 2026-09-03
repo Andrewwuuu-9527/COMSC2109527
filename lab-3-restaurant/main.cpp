@@ -20,12 +20,8 @@ int main(){
 
     Restaurant testRestaurant = populateRestaurant();
 
-    cout << "\n--- Test: Single Restaurant Filled ---\n";
-    cout << "Name: " << testRestaurant.name << endl;
-    cout << "Address: " << testRestaurant.address << endl;
-    cout << "Rating: " << testRestaurant.rating << endl;
-    cout << "Price: " << testRestaurant.avgPrice << endl;
-    cout << "Has Delivery: " << (testRestaurant.hasDelivery ? "Yes" : "No") << endl;
+    cout << "\n--- Test: Single Restaurant (with display function) ---\n";
+    displayRestaurant(testRestaurant);
 
     return 0;
 }
@@ -57,6 +53,14 @@ Restaurant populateRestaurant(){
     temp.hasDelivery = (toupper(deliveryInput) == 'Y');
 
     cin.ignore();
-    
+
     return temp;
+}
+
+void displayRestaurant(const Restaurant &r){
+    cout << " Name: " << r.name << endl;
+    cout << " Address: " << r.address << endl;
+    cout << " Rating: " << r.rating << "/5" << endl;
+    cout << " Avg Price: $" << fixed << setprecision(2) << r.avgPrice << endl;
+    cout << " Delivery: " << (r.hasDelivery ? "Yes" : "No") << endl;
 }
