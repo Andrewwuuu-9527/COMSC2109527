@@ -1,11 +1,15 @@
 // COMSC-210 | Lab 3 | Andrew
 #include <iostream>
+
 #include <string>
+
 #include <iomanip>
+
 #include <cctype>
+
 using namespace std;
 
-struct Restaurant{
+struct Restaurant {
     string name;
     string address;
     int rating;
@@ -13,10 +17,11 @@ struct Restaurant{
     bool hasDelivery;
 };
 
+// Function prototypes
 Restaurant populateRestaurant();
-void displayRestaurant(const Restaurant &r);
+void displayRestaurant(const Restaurant & r);
 
-int main(){
+int main() {
 
     const int SIZE = 4;
     Restaurant restaurants[SIZE];
@@ -28,7 +33,7 @@ int main(){
     }
 
     cout << "\n\n--- All Restaurants Info ---\n";
-    for (int i =0; i < SIZE; i++) {
+    for (int i = 0; i < SIZE; i++) {
         cout << "\n--- Restaurant " << (i + 1) << " ---\n";
         displayRestaurant(restaurants[i]);
     }
@@ -36,7 +41,8 @@ int main(){
     return 0;
 }
 
-Restaurant populateRestaurant(){
+// Function to populate a Restaurant struct with user input
+Restaurant populateRestaurant() {
     Restaurant temp;
 
     cout << "Enter restaurant name: ";
@@ -47,8 +53,8 @@ Restaurant populateRestaurant(){
 
     cout << "Enter restaurant rating (1-5): ";
     cin >> temp.rating;
-    cin.ignore(); 
-    while(temp.rating < 1 || temp.rating > 5){
+    cin.ignore();
+    while (temp.rating < 1 || temp.rating > 5) {
         cout << "Invalid. Please enter a rating between 1 and 5: ";
         cin >> temp.rating;
     }
@@ -67,7 +73,8 @@ Restaurant populateRestaurant(){
     return temp;
 }
 
-void displayRestaurant(const Restaurant &r){
+// Function to display restaurant information
+void displayRestaurant(const Restaurant & r) {
     cout << " Name: " << r.name << endl;
     cout << " Address: " << r.address << endl;
     cout << " Rating: " << r.rating << "/5" << endl;
