@@ -12,6 +12,9 @@ struct Restaurant{
     bool hasDelivery;
 };
 
+Restaurant populateRestaurant();
+void displayRestaurant(const Restaurant &r);
+
 int main(){
 
     return 0;
