@@ -18,10 +18,20 @@ void displayRestaurant(const Restaurant &r);
 
 int main(){
 
-    Restaurant testRestaurant = populateRestaurant();
+    const int SIZE = 4;
+    Restaurant restaurants[SIZE];
 
-    cout << "\n--- Test: Single Restaurant (with display function) ---\n";
-    displayRestaurant(testRestaurant);
+    cout << "Please enter data for " << SIZE << " restaurants:\n";
+    for (int i = 0; i < SIZE; i++) {
+        cout << "\n--- Restaurant " << (i + 1) << " ---\n";
+        restaurants[i] = populateRestaurant();
+    }
+
+    cout << "\n\n--- All Restaurants Info ---\n";
+    for (int i =0; i < SIZE; i++) {
+        cout << "\n--- Restaurant " << (i + 1) << " ---\n";
+        displayRestaurant(restaurants[i]);
+    }
 
     return 0;
 }
