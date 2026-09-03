@@ -4,7 +4,15 @@
 #include <iomanip>
 using namespace std;
 
+struct Restaurant{
+    string name;
+    string address;
+    int rating;
+    double avgPrice;
+    bool hasDelivery;
+};
+
 int main(){
-    
+
     return 0;
 }
