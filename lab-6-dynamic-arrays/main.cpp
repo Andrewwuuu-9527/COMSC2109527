@@ -13,6 +13,7 @@ int main() {
     double *arr = new double[SIZE];
 
     enterArrayData(arr, SIZE);
+    outputArrayData(arr, SIZE);
 
     delete[] arr;
     return 0;
@@ -22,8 +23,17 @@ int main() {
 void enterArrayData(double *arr, int size) {
     cout << "Data entry for the array:\n";
     for (int i = 0; i < size; i++) {
-        cout << "Enter value for element " << i << ": ";
+        cout << "> Element #" << i << ": ";
         cin >> *(arr + i);
     }
     cout << "Data entry complete.\n";
+}
+
+// Function to output the array data
+void outputArrayData(double *arr, int size) {
+    cout << "Outputting array elements: ";
+    for (int i = 0; i < size; i++) {
+        cout << *(arr + i) << " ";
+    }
+    cout << endl;
 }
