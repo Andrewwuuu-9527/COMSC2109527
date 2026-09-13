@@ -23,6 +23,13 @@ int main() {
     cout << "Original array: ";
     displayArray(arr, SIZE);
 
+    // Reverse the array
+    arr = reverseArray(arr, SIZE);
+
+    // Display the reversed array
+    cout << "Reversed array: ";
+    displayArray(arr, SIZE);
+
     delete[] arr;
     return 0;
 }
@@ -33,4 +40,21 @@ void displayArray(string *arr, int size) {
         cout << *(arr + i) << " ";
     }
     cout << endl;
+}
+
+// Function to reverse the array
+string* reverseArray(string *arr, int size) {
+    int left = 0;
+    int right = size - 1;
+
+    // Swap elements from both ends of the array until the middle is reached
+    while (left < right) {
+        string temp = *(arr + left);
+        *(arr + left) = *(arr + right);
+        *(arr + right) = temp;
+
+        left++;
+        right--;
+    } 
+    return arr;
 }
