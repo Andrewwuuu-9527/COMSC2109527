@@ -1,21 +1,28 @@
 // COMSC-210 | Lab 9 | Andrew
 #include <iostream>
+
 #include <fstream>
+
 #include <array>
+
 #include <vector>
+
 #include <algorithm>
+
 #include <numeric>
+
 #include <iomanip>
+
 using namespace std;
 
-const int SIZE = 30;    // Maximum number of temperatures to read
+const int SIZE = 30; // Maximum number of temperatures to read
 
 int main() {
     // Array demonstration
     cout << "===== STD::ARRAY DEMO =====\n";
 
     // Declare an array to hold temperatures
-    array<double, SIZE> temps;
+    array < double, SIZE > temps;
     ifstream fin("temperatures.txt");
     if (!fin) {
         cerr << "Error: Cannot open temperatures.txt\n";
@@ -50,13 +57,13 @@ int main() {
     // Sort the temperatures and display them
     sort(temps.begin(), temps.end());
     cout << "6. Sorted temperatures: ";
-    for (double t : temps) cout << t << " ";
+    for (double t: temps) cout << t << " ";
     cout << endl;
 
     // Sort in descending order and display
     sort(temps.rbegin(), temps.rend());
     cout << "7. Descending order: ";
-    for (double t : temps) cout << t << " ";
+    for (double t: temps) cout << t << " ";
     cout << endl;
 
     // Search for a specific temperature
@@ -68,34 +75,46 @@ int main() {
         cout << "8. " << target << " not found.\n";
 
     // Display max and min temperatures
-    cout << "9. Max temp: " << *max_element(temps.begin(), temps.end()) << endl;
-    cout << "10. Min temp: " << *min_element(temps.begin(), temps.end()) << endl;
-    
+    cout << "9. Max temp: " << * max_element(temps.begin(), temps.end()) << endl;
+    cout << "10. Min temp: " << * min_element(temps.begin(), temps.end()) << endl;
+
     // Calculate sum and average of temperatures
     double sum = accumulate(temps.begin(), temps.end(), 0.0);
     cout << "11. Sum: " << sum << endl;
     cout << "12. Average: " << (sum / temps.size()) << endl;
 
     // Fill an array with a specific value and display it
-    array<double, 5> testFill;
+    array < double, 5 > testFill;
     testFill.fill(99.9);
     cout << "13. fill() demo: ";
-    for (double t : testFill) cout << t << " ";
+    for (double t: testFill) cout << t << " ";
     cout << endl;
 
     // Swap two arrays and display the result
-    array<double, 5> arrA = {1, 2, 3, 4, 5};
-    array<double, 5> arrB = {10, 20, 30, 40, 50};
+    array < double, 5 > arrA = {
+        1,
+        2,
+        3,
+        4,
+        5
+    };
+    array < double, 5 > arrB = {
+        10,
+        20,
+        30,
+        40,
+        50
+    };
     arrA.swap(arrB);
     cout << "14. After swap, arrA: ";
-    for (double t : arrA) cout << t << " ";
+    for (double t: arrA) cout << t << " ";
     cout << endl << endl;
 
     // Vector demonstration
     cout << "===== STD::VECTOR DEMO =====\n";
 
     // Declare a vector to hold temperatures
-    vector<double> vTemps;
+    vector < double > vTemps;
     fin.open("temperatures.txt");
     if (!fin) {
         cout << "Error: Cannot open temperatures.txt\n";
@@ -121,13 +140,13 @@ int main() {
     // Sort the vector and display it
     sort(vTemps.begin(), vTemps.end());
     cout << "6. Sorted temperatures: ";
-    for (double t : vTemps) cout << t << " ";
+    for (double t: vTemps) cout << t << " ";
     cout << endl;
 
     // Sort in descending order and display
     sort(vTemps.rbegin(), vTemps.rend());
     cout << "7. Descending order: ";
-    for (double t : vTemps) cout << t << " ";
+    for (double t: vTemps) cout << t << " ";
     cout << endl;
 
     // Sort in descending order and display
@@ -138,8 +157,8 @@ int main() {
         cout << "8. " << target << " not found.\n";
 
     // Display max and min temperatures
-    cout << "9. Max temp: " << *max_element(vTemps.begin(), vTemps.end()) << endl;
-    cout << "10. Min temp: " << *min_element(vTemps.begin(), vTemps.end()) << endl;
+    cout << "9. Max temp: " << * max_element(vTemps.begin(), vTemps.end()) << endl;
+    cout << "10. Min temp: " << * min_element(vTemps.begin(), vTemps.end()) << endl;
 
     // Calculate sum and average of vector temperatures
     double vSum = accumulate(vTemps.begin(), vTemps.end(), 0.0);
@@ -159,7 +178,7 @@ int main() {
     cout << "15. After insert at index 2: " << vTemps[2] << endl;
 
     // Erase the value at index 2
-    vTemps.erase(vTemps.begin() + 2); 
+    vTemps.erase(vTemps.begin() + 2);
     cout << "16. After erase at index 2: " << vTemps[2] << endl;
 
     // Clear the vector and check if it's empty
