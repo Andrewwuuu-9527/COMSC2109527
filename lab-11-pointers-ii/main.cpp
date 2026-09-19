@@ -27,6 +27,32 @@ void inputOrder(PizzaOrder& order);
 void displayOrder(const PizzaOrder& order);
 
 int main() {
+    int numOrders;
+
+    cout << "===== Pizza Order System =====\n\n";
+    cout << "How many orders today? ";
+    cin >> numOrders;
+    cin.ignore();
+
+    // Dynamically allocate an array of PizzaOrder objects.
+    // Each object's constructor runs automatically, setting toppings to nullptr.
+    PizzaOrder* orders = new PizzaOrder[numOrders];
+
+    // Input data for each order
+    for (int i = 0; i < numOrders; i++) {
+        cout << "\n--- Order #" << i + 1 << " ---\n";
+        inputOrder(orders[i]);
+    }
+
+    // Display all orders
+    cout << "\n\n===== All Orders Summary =====\n";
+    for (int i = 0; i < numOrders; i++) {
+        cout << "\nOrder #" << i + 1 << ":\n";
+        displayOrder(orders[i]);
+    }
+
+    // Free the dynamically allocated array of structs.
+    delete[] orders;
 
     return 0;
 }
