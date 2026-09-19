@@ -1,30 +1,32 @@
 // COMSC-210 | Lab 11 | Andrew
 #include <iostream>
+
 #include <string>
+
 using namespace std;
 
 // PizzaOrder struct
 struct PizzaOrder {
-    string customerName;    // Customer's full name
-    int orderNumber;        // Unique order identifier
-    int numToppings;        // Number of toppings, size of dynamic array
-    string* toppings;       // Pointer to dynamically allocated array of topping names
+    string customerName; // Customer's full name
+    int orderNumber; // Unique order identifier
+    int numToppings; // Number of toppings, size of dynamic array
+    string * toppings; // Pointer to dynamically allocated array of topping names
 
     // Initialize pointer to nullptr to avoid deleting garbage when the destructor runs on a newly created object.
-    PizzaOrder() : orderNumber(0), numToppings(0), toppings(nullptr) {}
+    PizzaOrder(): orderNumber(0), numToppings(0), toppings(nullptr) {}
 
-    // Automatically called when the object goes out of scope. Frees the dynamically allocated toppings array to prevent memory leaks.
-    ~PizzaOrder() {
-        if (toppings) {
-            delete[] toppings;
-            toppings = nullptr;
+        // Automatically called when the object goes out of scope. Frees the dynamically allocated toppings array to prevent memory leaks.
+        ~PizzaOrder() {
+            if (toppings) {
+                delete[] toppings;
+                toppings = nullptr;
+            }
         }
-    }
 };
 
 // Function prototypes
-void inputOrder(PizzaOrder& order);
-void displayOrder(const PizzaOrder& order);
+void inputOrder(PizzaOrder & order);
+void displayOrder(const PizzaOrder & order);
 
 int main() {
     int numOrders;
@@ -36,7 +38,7 @@ int main() {
 
     // Dynamically allocate an array of PizzaOrder objects.
     // Each object's constructor runs automatically, setting toppings to nullptr.
-    PizzaOrder* orders = new PizzaOrder[numOrders];
+    PizzaOrder * orders = new PizzaOrder[numOrders];
 
     // Input data for each order
     for (int i = 0; i < numOrders; i++) {
@@ -58,7 +60,7 @@ int main() {
 }
 
 // Reads data from the console for one order
-void inputOrder(PizzaOrder& order) {
+void inputOrder(PizzaOrder & order) {
     cout << "Customer name: ";
     getline(cin, order.customerName);
 
@@ -79,7 +81,7 @@ void inputOrder(PizzaOrder& order) {
 }
 
 // Prints one order in a nice format
-void displayOrder(const PizzaOrder& order) {
+void displayOrder(const PizzaOrder & order) {
     cout << "  Customer: " << order.customerName << endl;
     cout << "  Order #:  " << order.orderNumber << endl;
     cout << "  Toppings: ";
