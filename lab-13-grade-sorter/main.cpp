@@ -38,6 +38,16 @@ int main() {
     // Sort by student ID
     selectionSort(students, count);
 
+    // Write sorted results to output file
+    ofstream fout("210-lab-13-grades-sorted.txt");
+    if (!fout) {
+        cout << "Error: Cannot create output file '210-lab-13-grades-sorted.txt'.\n";
+        return 1;
+    }
+    writeSorted(fout, students, count);
+    fout.close();
+    cout << "Sorted results written to 210-lab-13-grades-sorted.txt\n";
+
     return 0;
 }
 
@@ -65,5 +75,12 @@ void selectionSort(Student students[], int count) {
             students[i] = students[smallestIndex];
             students[smallestIndex] = temp;
         }
+    }
+}
+
+// Write sorted records to output file
+void writeSorted(ofstream& fout, Student students[], int count) {
+    for (int i = 0; i < count; i++) {
+        fout << students[i].studentID << " " << students[i].examScore << "\n";
     }
 }
