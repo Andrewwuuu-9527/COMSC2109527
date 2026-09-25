@@ -1,8 +1,12 @@
 // COMSC-210 | Lab 13 | Andrew
 #include <iostream>
+
 #include <fstream>
+
 #include <iomanip>
+
 #include <cmath>
+
 using namespace std;
 
 const int MAX_STUDENTS = 200;
@@ -13,9 +17,9 @@ struct Student {
 };
 
 // Function prototypes
-int readStudents(ifstream& fin, Student students[]);
+int readStudents(ifstream & fin, Student students[]);
 void selectionSort(Student students[], int count);
-void writeSorted(ofstream& fout, Student students[], int count);
+void writeSorted(ofstream & fout, Student students[], int count);
 void displaySummary(Student students[], int count);
 
 int main() {
@@ -55,10 +59,10 @@ int main() {
 }
 
 // Read all student records from file into array
-int readStudents(ifstream& fin, Student students[]) {
+int readStudents(ifstream & fin, Student students[]) {
     int count = 0;
-    while (count < MAX_STUDENTS && fin >> students[count].studentID
-           >> students[count].examScore) {
+    while (count < MAX_STUDENTS && fin >> students[count].studentID >>
+        students[count].examScore) {
         count++;
     }
     return count;
@@ -82,7 +86,7 @@ void selectionSort(Student students[], int count) {
 }
 
 // Write sorted records to output file
-void writeSorted(ofstream& fout, Student students[], int count) {
+void writeSorted(ofstream & fout, Student students[], int count) {
     for (int i = 0; i < count; i++) {
         fout << students[i].studentID << " " << students[i].examScore << "\n";
     }
@@ -129,8 +133,8 @@ void displaySummary(Student students[], int count) {
         medianScore = sortedByScore[count / 2].examScore;
         medianID = sortedByScore[count / 2].studentID;
     } else {
-        medianScore = (sortedByScore[count / 2 - 1].examScore
-                     + sortedByScore[count / 2].examScore) / 2.0;
+        medianScore = (sortedByScore[count / 2 - 1].examScore +
+            sortedByScore[count / 2].examScore) / 2.0;
         medianID = sortedByScore[count / 2].studentID;
     }
 
@@ -143,12 +147,12 @@ void displaySummary(Student students[], int count) {
     double stdDev = sqrt(sumSq / count);
 
     cout << "\n--- Summary Statistics ---\n";
-    cout << "Minimum Score: " << students[minIdx].examScore
-         << " (Student ID: " << students[minIdx].studentID << ")\n";
-    cout << "Maximum Score: " << students[maxIdx].examScore
-         << " (Student ID: " << students[maxIdx].studentID << ")\n";
+    cout << "Minimum Score: " << students[minIdx].examScore <<
+        " (Student ID: " << students[minIdx].studentID << ")\n";
+    cout << "Maximum Score: " << students[maxIdx].examScore <<
+        " (Student ID: " << students[maxIdx].studentID << ")\n";
     cout << "Mean Score: " << mean << "\n";
-    cout << "Median Score: " << medianScore
-         << " (Student ID: " << medianID << ")\n";
+    cout << "Median Score: " << medianScore <<
+        " (Student ID: " << medianID << ")\n";
     cout << "Standard Deviation: " << stdDev << "\n";
 }
