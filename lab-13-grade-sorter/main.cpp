@@ -26,7 +26,6 @@ int main() {
     ifstream fin("210-lab-13-grades.txt");
     if (!fin) {
         cout << "Error: Cannot open input file '210-lab-13-grades.txt'.\n";
-        cout << "Please ensure the file exists in the program directory.\n";
         return 1;
     }
 
@@ -34,10 +33,10 @@ int main() {
     fin.close();
     cout << "Read " << count << " student records\n";
 
-    if (count == 0) {
-        cout << "No records found. Exiting.\n";
-        return 1;
-    }
+    if (count == 0) return 1;
+
+    // Sort by student ID
+    selectionSort(students, count);
 
     return 0;
 }
@@ -50,4 +49,21 @@ int readStudents(ifstream& fin, Student students[]) {
         count++;
     }
     return count;
+}
+
+// Sort students by student ID in ascending order
+void selectionSort(Student students[], int count) {
+    for (int i = 0; i < count - 1; i++) {
+        int smallestIndex = i;
+        for (int j = i + 1; j < count; j++) {
+            if (students[j].studentID < students[smallestIndex].studentID) {
+                smallestIndex = j;
+            }
+        }
+        if (smallestIndex != i) {
+            Student temp = students[i];
+            students[i] = students[smallestIndex];
+            students[smallestIndex] = temp;
+        }
+    }
 }
