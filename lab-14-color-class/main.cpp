@@ -13,6 +13,16 @@ private:
 public:
     // Constructor: initialize all channels to 0
     Color() : red(0), green(0), blue(0) {}
+
+    // Getters (marked const, they don't modify the object)
+    int getRed() const   { return red; }
+    int getGreen() const { return green; }
+    int getBlue() const  { return blue; }
+
+    // Setters (modify the object, no const)
+    void setRed(int r)   { red = r; }
+    void setGreen(int g) { green = g; }
+    void setBlue(int b)  { blue = b; }
 };
 
 int main() {
