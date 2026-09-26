@@ -1,36 +1,51 @@
 // COMSC-210 | Lab 14 | Andrew
 #include <iostream>
+
 #include <iomanip>
+
 using namespace std;
 
 const int W10 = 10;
 
 // Color class, represents an RGB color with three private integer members
 class Color {
-private:
-    int red;
+    private: int red;
     int green;
     int blue;
 
-public:
-    // Constructor: initialize all channels to 0
-    Color() : red(0), green(0), blue(0) {}
+    public:
+        // Constructor: initialize all channels to 0
+        Color(): red(0),
+    green(0),
+    blue(0) {}
 
     // Getters (marked const, they don't modify the object)
-    int getRed() const   { return red; }
-    int getGreen() const { return green; }
-    int getBlue() const  { return blue; }
+    int getRed() const {
+        return red;
+    }
+    int getGreen() const {
+        return green;
+    }
+    int getBlue() const {
+        return blue;
+    }
 
     // Setters (modify the object, no const)
-    void setRed(int r)   { red = r; }
-    void setGreen(int g) { green = g; }
-    void setBlue(int b)  { blue = b; }
+    void setRed(int r) {
+        red = r;
+    }
+    void setGreen(int g) {
+        green = g;
+    }
+    void setBlue(int b) {
+        blue = b;
+    }
 
     // Print the color's RGB values in a nicely formatted way
     void print() const {
-        cout << "RGB(" << setw(3) << red << ", "
-                       << setw(3) << green << ", "
-                       << setw(3) << blue << ")" << endl;
+        cout << "RGB(" << setw(3) << red << ", " <<
+            setw(3) << green << ", " <<
+            setw(3) << blue << ")" << endl;
     }
 };
 
