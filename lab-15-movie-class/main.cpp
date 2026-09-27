@@ -1,31 +1,49 @@
 // COMSC-210 | Lab 15 | Andrew
 #include <iostream>
+
 #include <fstream>
+
 #include <iomanip>
+
 #include <vector>
+
 #include <string>
+
 using namespace std;
 
 // Movie class, represents a movie: title, year released, and screenwriter
 class Movie {
-private:
-    string title;
+    private: string title;
     int yearReleased;
     string screenwriter;
 
-public:
-    // Default constructor: initialize members to empty values
-    Movie() : title(""), yearReleased(0), screenwriter("") {}
+    public:
+        // Default constructor: initialize members to empty values
+        Movie(): title(""),
+    yearReleased(0),
+    screenwriter("") {}
 
     // Getters
-    string getTitle() const        { return title; }
-    int getYearReleased() const    { return yearReleased; }
-    string getScreenwriter() const { return screenwriter; }
+    string getTitle() const {
+        return title;
+    }
+    int getYearReleased() const {
+        return yearReleased;
+    }
+    string getScreenwriter() const {
+        return screenwriter;
+    }
 
     // Setters
-    void setTitle(string t)        { title = t; }
-    void setYearReleased(int y)    { yearReleased = y; }
-    void setScreenwriter(string s) { screenwriter = s; }
+    void setTitle(string t) {
+        title = t;
+    }
+    void setYearReleased(int y) {
+        yearReleased = y;
+    }
+    void setScreenwriter(string s) {
+        screenwriter = s;
+    }
 
     // Print object data in the format required by the sample output
     void print() const {
@@ -37,7 +55,7 @@ public:
 };
 
 int main() {
-    vector<Movie> movies;
+    vector < Movie > movies;
 
     // Open input file and verify
     ifstream fin("input.txt");
@@ -50,7 +68,7 @@ int main() {
     // Read 4 records
     const int NUM_RECORDS = 4;
     for (int i = 0; i < NUM_RECORDS; i++) {
-        Movie temp;         // temporary Movie object
+        Movie temp; // temporary Movie object
         string inTitle;
         int inYear;
         string inScreenwriter;
@@ -58,7 +76,7 @@ int main() {
         // Read data in the order: title, year, screenwriter
         getline(fin, inTitle);
         fin >> inYear;
-        fin.ignore();       // clear newline before reading next string
+        fin.ignore(); // clear newline before reading next string
         getline(fin, inScreenwriter);
 
         // Populate temporary object with setters
@@ -72,7 +90,7 @@ int main() {
     fin.close();
 
     // Output all movies
-    for (const Movie& m : movies) {
+    for (const Movie & m: movies) {
         m.print();
     }
 
