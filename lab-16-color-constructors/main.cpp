@@ -1,20 +1,20 @@
 // COMSC-210 | Lab 16 | Andrew
 #include <iostream>
+
 using namespace std;
 
 class Color {
-private:
-    int red;
+    private: int red;
     int green;
     int blue;
 
-public:
-    // Default constructor: initializes all values to 0
-    Color() {
-        red = 0;
-        green = 0;
-        blue = 0;
-    }
+    public:
+        // Default constructor: initializes all values to 0
+        Color() {
+            red = 0;
+            green = 0;
+            blue = 0;
+        }
 
     // Parameter constructor: initializes with provided values
     Color(int r, int g, int b) {
