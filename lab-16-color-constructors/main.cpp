@@ -23,6 +23,13 @@ public:
         blue = b;
     }
 
+    // Partial constructor: only red is provided, others default to 0
+    Color(int r) {
+        red = r;
+        green = 0;
+        blue = 0;
+    }
+
     // Display the color in RGB format
     void display() const {
         cout << "RGB(" << red << ", " << green << ", " << blue << ")" << endl;
@@ -39,6 +46,11 @@ int main() {
     Color customColor(255, 128, 0);
     cout << "Custom color:  ";
     customColor.display();
+
+    // Test partial constructor
+    Color redOnly(200);
+    cout << "Red only:      ";
+    redOnly.display();
 
     return 0;
 }
