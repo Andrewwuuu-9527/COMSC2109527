@@ -16,6 +16,13 @@ public:
         blue = 0;
     }
 
+    // Parameter constructor: initializes with provided values
+    Color(int r, int g, int b) {
+        red = r;
+        green = g;
+        blue = b;
+    }
+
     // Display the color in RGB format
     void display() const {
         cout << "RGB(" << red << ", " << green << ", " << blue << ")" << endl;
@@ -27,6 +34,11 @@ int main() {
     Color defaultColor;
     cout << "Default color: ";
     defaultColor.display();
+
+    // Test parameter constructor
+    Color customColor(255, 128, 0);
+    cout << "Custom color:  ";
+    customColor.display();
 
     return 0;
 }
