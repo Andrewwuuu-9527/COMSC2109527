@@ -69,3 +69,71 @@ void addNodeTail(Node*& head, float value) {
     }
     current->next = newNode;
 }
+
+// Function to delete a node at a specified position in the linked list
+void deleteNode(Node*& head, int position) {
+    if (head == nullptr) {
+        cout << "Error: List is empty, nothing to delete.\n";
+        return;
+    }
+
+    // Validate position by counting nodes
+    int count = 0;
+    Node* current = head;
+    while (current) {
+        count++;
+        current = current->next;
+    }
+
+    if (position < 1 || position > count) {
+        cout << "Error: Position " << position
+             << " is out of range (1 to " << count << ").\n";
+        return;
+    }
+
+    // Special case: deleting the head node
+    if (position == 1) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+    // Traverse to the node just before the target
+    current = head;
+    for (int i = 1; i < position - 1; i++) {
+        current = current->next;
+    }
+    Node* temp = current->next;
+    current->next = temp->next;
+    delete temp;
+}
+
+// Function to insert a new node at a specified position in the linked list
+void insertNode(Node*& head, int position, float value) {
+    Node* newNode = new Node;
+    newNode->value = value;
+
+    // Insert at front (position 0)
+    if (position == 0) {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+
+    // Traverse to the node at the given position
+    Node* current = head;
+    for (int i = 1; i < position && current != nullptr; i++) {
+        current = current->next;
+    }
+
+    if (current == nullptr) {
+        cout << "Error: Position " << position
+             << " is out of range. Insertion cancelled.\n";
+        delete newNode;
+        return;
+    }
+
+    newNode->next = current->next;
+    current->next = newNode;
+}
