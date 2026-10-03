@@ -43,3 +43,29 @@ int getValidInt(int min, int max) {
              << min << " and " << max << ": ";
     }
 }
+
+// Function to add a new node at the front of the linked list
+void addNodeFront(Node*& head, float value) {
+    Node* newNode = new Node;
+    newNode->value = value;
+    newNode->next = head;
+    head = newNode;
+}
+
+// Function to add a new node at the tail of the linked list
+void addNodeTail(Node*& head, float value) {
+    Node* newNode = new Node;
+    newNode->value = value;
+    newNode->next = nullptr;
+
+    if (head == nullptr) {
+        head = newNode;
+        return;
+    }
+
+    Node* current = head;
+    while (current->next != nullptr) {
+        current = current->next;
+    }
+    current->next = newNode;
+}
