@@ -24,9 +24,64 @@ int getValidInt(int min, int max);
 int main() {
     Node* head = nullptr;
     int choice = 0;
+    float value;
+    int position;
 
-    cout << "Modular Linked List Program\n";
+    do {
+        // Display the menu
+        cout << "\n===== Linked List Menu =====\n";
+        cout << "1. Add a node to the front\n";
+        cout << "2. Add a node to the end\n";
+        cout << "3. Delete a node\n";
+        cout << "4. Insert a node\n";
+        cout << "5. Delete the entire list\n";
+        cout << "6. Print the list\n";
+        cout << "7. Exit\n";
+        cout << "Choice --> ";
 
+        // Validate menu choice (must be integer 1-7)
+        choice = getValidInt(MENU_MIN, MENU_MAX);
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value to add at front: ";
+                cin >> value;
+                addNodeFront(head, value);
+                cout << "Node added at front.\n";
+                break;
+            case 2:
+                cout << "Enter value to add at end: ";
+                cin >> value;
+                addNodeTail(head, value);
+                cout << "Node added at end.\n";
+                break;
+            case 3:
+                cout << "Enter position to delete (1-based): ";
+                position = getValidInt(1, 1000);
+                deleteNode(head, position);
+                break;
+            case 4:
+                cout << "Insert after position (0 for front): ";
+                position = getValidInt(0, 1000);
+                cout << "Enter value to insert: ";
+                cin >> value;
+                insertNode(head, position, value);
+                break;
+            case 5:
+                deleteList(head);
+                cout << "Entire list deleted.\n";
+                break;
+            case 6:
+                printList(head);
+                break;
+            case 7:
+                cout << "Exiting program. Goodbye!\n";
+                break;
+        }
+    } while (choice != 7);
+
+    // Clean up any remaining nodes before exit
+    deleteList(head);
     return 0;
 }
 
@@ -136,4 +191,29 @@ void insertNode(Node*& head, int position, float value) {
 
     newNode->next = current->next;
     current->next = newNode;
+}
+
+// Function to delete the entire linked list and free memory
+void deleteList(Node*& head) {
+    Node* current = head;
+    while (current) {
+        Node* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    head = nullptr;
+}
+
+// Function to print the linked list
+void printList(Node* head) {
+    if (head == nullptr) {
+        cout << "List is empty.\n";
+        return;
+    }
+    int count = 1;
+    Node* current = head;
+    while (current) {
+        cout << "[" << count++ << "] " << current->value << endl;
+        current = current->next;
+    }
 }
