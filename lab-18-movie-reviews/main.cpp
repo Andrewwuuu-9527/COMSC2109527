@@ -1,11 +1,18 @@
 // COMSC-210 | Lab 18 | Andrew
 #include <iostream>
+
 #include <fstream>
+
 #include <string>
+
 #include <vector>
+
 #include <cstdlib>
+
 #include <ctime>
+
 #include <iomanip>
+
 using namespace std;
 
 const int MIN_TENTHS = 10;
@@ -16,28 +23,29 @@ const int RATING_RANGE = MAX_TENTHS - MIN_TENTHS + 1;
 struct Review {
     double rating;
     string comment;
-    Review* next;
+    Review * next;
 };
 
 class Movie {
-private:
-    string title;
-    Review* head;
+    private: string title;
+    Review * head;
 
-public:
-    // Constructors
-    Movie();
+    public:
+        // Constructors
+        Movie();
     Movie(string t);
 
     // Rule of Three
     ~Movie();
-    Movie(const Movie& other);
-    Movie& operator=(const Movie& other);
+    Movie(const Movie & other);
+    Movie & operator = (const Movie & other);
 
     // Methods
     void addReview(double rating, string comment);
     void displayReviews() const;
-    string getTitle() const { return title; }
+    string getTitle() const {
+        return title;
+    }
 };
 
 // Default constructor: empty title, empty list
@@ -64,12 +72,12 @@ int main() {
     // Read all comments from input.txt
     ifstream fin("input.txt");
     if (!fin) {
-        cout << "Error: Cannot open input.txt. "
-             << "Please ensure the file exists.\n";
+        cout << "Error: Cannot open input.txt. " <<
+            "Please ensure the file exists.\n";
         return 1;
     }
 
-    vector<string> comments;
+    vector < string > comments;
     string line;
     while (getline(fin, line)) {
         if (!line.empty()) {
@@ -81,7 +89,7 @@ int main() {
     cout << "Read " << comments.size() << " comments.\n\n";
 
     // Movie titles
-    vector<string> titles = {
+    vector < string > titles = {
         "Lord of the Rings",
         "The Godfather",
         "Star Wars",
@@ -89,23 +97,23 @@ int main() {
     };
 
     const int REVIEWS_PER_MOVIE = 3;
-    vector<Movie> movies;
+    vector < Movie > movies;
 
     // Create movies with 3 reviews each
     int commentIndex = 0;
-    for (int i = 0; i < (int)titles.size(); i++) {
+    for (int i = 0; i < (int) titles.size(); i++) {
         Movie m(titles[i]);
         for (int j = 0; j < REVIEWS_PER_MOVIE; j++) {
-            if (commentIndex < (int)comments.size()) {
+            if (commentIndex < (int) comments.size()) {
                 m.addReview(generateRating(), comments[commentIndex]);
                 commentIndex++;
             }
         }
-        movies.push_back(m);  // Uses copy constructor
+        movies.push_back(m); // Uses copy constructor
     }
 
     // Display all movies
-    for (int i = 0; i < (int)movies.size(); i++) {
+    for (int i = 0; i < (int) movies.size(); i++) {
         movies[i].displayReviews();
         cout << endl;
     }
@@ -115,10 +123,10 @@ int main() {
 
 // Destructor: delete all nodes in the linked list
 Movie::~Movie() {
-    Review* current = head;
+    Review * current = head;
     while (current) {
-        Review* temp = current;
-        current = current->next;
+        Review * temp = current;
+        current = current -> next;
         delete temp;
     }
     head = nullptr;
@@ -126,10 +134,10 @@ Movie::~Movie() {
 
 // addReview() inserts a new review at the head of the list
 void Movie::addReview(double rating, string comment) {
-    Review* newNode = new Review;
-    newNode->rating = rating;
-    newNode->comment = comment;
-    newNode->next = head;
+    Review * newNode = new Review;
+    newNode -> rating = rating;
+    newNode -> comment = comment;
+    newNode -> next = head;
     head = newNode;
 }
 
@@ -144,21 +152,21 @@ void Movie::displayReviews() const {
 
     double sum = 0;
     int count = 0;
-    Review* current = head;
+    Review * current = head;
     while (current) {
         count++;
-        sum += current->rating;
-        cout << "  > Review #" << count << ": "
-             << fixed << setprecision(1) << current->rating
-             << ": " << current->comment << endl;
-        current = current->next;
+        sum += current -> rating;
+        cout << "  > Review #" << count << ": " <<
+            fixed << setprecision(1) << current -> rating <<
+            ": " << current -> comment << endl;
+        current = current -> next;
     }
-    cout << "  > Average: " << fixed << setprecision(1)
-         << (sum / count) << endl;
+    cout << "  > Average: " << fixed << setprecision(1) <<
+        (sum / count) << endl;
 }
 
 // Copy constructor: deep copies the entire linked list
-Movie::Movie(const Movie& other) {
+Movie::Movie(const Movie & other) {
     title = other.title;
     head = nullptr;
 
@@ -166,58 +174,58 @@ Movie::Movie(const Movie& other) {
 
     // Copy first node
     head = new Review;
-    head->rating = other.head->rating;
-    head->comment = other.head->comment;
-    head->next = nullptr;
+    head -> rating = other.head -> rating;
+    head -> comment = other.head -> comment;
+    head -> next = nullptr;
 
     // Copy remaining nodes
-    Review* current = head;
-    Review* otherCurrent = other.head->next;
+    Review * current = head;
+    Review * otherCurrent = other.head -> next;
     while (otherCurrent) {
-        Review* newNode = new Review;
-        newNode->rating = otherCurrent->rating;
-        newNode->comment = otherCurrent->comment;
-        newNode->next = nullptr;
-        current->next = newNode;
+        Review * newNode = new Review;
+        newNode -> rating = otherCurrent -> rating;
+        newNode -> comment = otherCurrent -> comment;
+        newNode -> next = nullptr;
+        current -> next = newNode;
         current = newNode;
-        otherCurrent = otherCurrent->next;
+        otherCurrent = otherCurrent -> next;
     }
 }
 
 // Copy assignment operator: frees existing list, then deep copies
-Movie& Movie::operator=(const Movie& other) {
-    if (this == &other) return *this;  // self-assignment check
+Movie & Movie::operator = (const Movie & other) {
+    if (this == & other) return * this; // self-assignment check
 
     // Free existing reviews
-    Review* current = head;
+    Review * current = head;
     while (current) {
-        Review* temp = current;
-        current = current->next;
+        Review * temp = current;
+        current = current -> next;
         delete temp;
     }
     head = nullptr;
 
     title = other.title;
 
-    if (other.head == nullptr) return *this;
+    if (other.head == nullptr) return * this;
 
     // Deep copy
     head = new Review;
-    head->rating = other.head->rating;
-    head->comment = other.head->comment;
-    head->next = nullptr;
+    head -> rating = other.head -> rating;
+    head -> comment = other.head -> comment;
+    head -> next = nullptr;
 
     current = head;
-    Review* otherCurrent = other.head->next;
+    Review * otherCurrent = other.head -> next;
     while (otherCurrent) {
-        Review* newNode = new Review;
-        newNode->rating = otherCurrent->rating;
-        newNode->comment = otherCurrent->comment;
-        newNode->next = nullptr;
-        current->next = newNode;
+        Review * newNode = new Review;
+        newNode -> rating = otherCurrent -> rating;
+        newNode -> comment = otherCurrent -> comment;
+        newNode -> next = nullptr;
+        current -> next = newNode;
         current = newNode;
-        otherCurrent = otherCurrent->next;
+        otherCurrent = otherCurrent -> next;
     }
 
-    return *this;
+    return * this;
 }
