@@ -52,7 +52,63 @@ Movie::Movie(string t) {
     head = nullptr;
 }
 
+// generateRating() returns a random double between 1.0 and 5.0, one decimal place
+double generateRating() {
+    int tenths = rand() % RATING_RANGE + MIN_TENTHS;
+    return tenths / 10.0;
+}
+
 int main() {
+    srand(time(0));
+
+    // Read all comments from input.txt
+    ifstream fin("input.txt");
+    if (!fin) {
+        cout << "Error: Cannot open input.txt. "
+             << "Please ensure the file exists.\n";
+        return 1;
+    }
+
+    vector<string> comments;
+    string line;
+    while (getline(fin, line)) {
+        if (!line.empty()) {
+            comments.push_back(line);
+        }
+    }
+    fin.close();
+
+    cout << "Read " << comments.size() << " comments.\n\n";
+
+    // Movie titles
+    vector<string> titles = {
+        "Lord of the Rings",
+        "The Godfather",
+        "Star Wars",
+        "Jurassic Park"
+    };
+
+    const int REVIEWS_PER_MOVIE = 3;
+    vector<Movie> movies;
+
+    // Create movies with 3 reviews each
+    int commentIndex = 0;
+    for (int i = 0; i < (int)titles.size(); i++) {
+        Movie m(titles[i]);
+        for (int j = 0; j < REVIEWS_PER_MOVIE; j++) {
+            if (commentIndex < (int)comments.size()) {
+                m.addReview(generateRating(), comments[commentIndex]);
+                commentIndex++;
+            }
+        }
+        movies.push_back(m);  // Uses copy constructor
+    }
+
+    // Display all movies
+    for (int i = 0; i < (int)movies.size(); i++) {
+        movies[i].displayReviews();
+        cout << endl;
+    }
 
     return 0;
 }
