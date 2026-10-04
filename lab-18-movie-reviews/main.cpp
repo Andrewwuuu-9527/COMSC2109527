@@ -100,3 +100,68 @@ void Movie::displayReviews() const {
     cout << "  > Average: " << fixed << setprecision(1)
          << (sum / count) << endl;
 }
+
+// Copy constructor: deep copies the entire linked list
+Movie::Movie(const Movie& other) {
+    title = other.title;
+    head = nullptr;
+
+    if (other.head == nullptr) return;
+
+    // Copy first node
+    head = new Review;
+    head->rating = other.head->rating;
+    head->comment = other.head->comment;
+    head->next = nullptr;
+
+    // Copy remaining nodes
+    Review* current = head;
+    Review* otherCurrent = other.head->next;
+    while (otherCurrent) {
+        Review* newNode = new Review;
+        newNode->rating = otherCurrent->rating;
+        newNode->comment = otherCurrent->comment;
+        newNode->next = nullptr;
+        current->next = newNode;
+        current = newNode;
+        otherCurrent = otherCurrent->next;
+    }
+}
+
+// Copy assignment operator: frees existing list, then deep copies
+Movie& Movie::operator=(const Movie& other) {
+    if (this == &other) return *this;  // self-assignment check
+
+    // Free existing reviews
+    Review* current = head;
+    while (current) {
+        Review* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    head = nullptr;
+
+    title = other.title;
+
+    if (other.head == nullptr) return *this;
+
+    // Deep copy
+    head = new Review;
+    head->rating = other.head->rating;
+    head->comment = other.head->comment;
+    head->next = nullptr;
+
+    current = head;
+    Review* otherCurrent = other.head->next;
+    while (otherCurrent) {
+        Review* newNode = new Review;
+        newNode->rating = otherCurrent->rating;
+        newNode->comment = otherCurrent->comment;
+        newNode->next = nullptr;
+        current->next = newNode;
+        current = newNode;
+        otherCurrent = otherCurrent->next;
+    }
+
+    return *this;
+}
