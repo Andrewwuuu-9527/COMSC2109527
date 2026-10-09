@@ -59,31 +59,35 @@ public:
 };
 
 int main() {
+    srand(time(0));
     cout << fixed << setprecision(2);
 
-    //creating pointer to first chair object
+    // 1. Default constructor + setters
+    cout << "=== Chair #1: Default constructor + setters ===\n";
     Chair *chairPtr = new Chair;
     chairPtr->setLegs(4);
     chairPtr->setPrices(121.21, 232.32, 414.14);
     chairPtr->print();
+    delete chairPtr;
+    chairPtr = nullptr;
 
-    //creating dynamic chair object with constructor
-    Chair *livingChair = new Chair(3);
-    livingChair->setPrices(525.25, 434.34, 252.52);
+    // 2. Parameter constructor with legs and price array
+    cout << "=== Chair #2: Parameter constructor ===\n";
+    double prices2[SIZE] = {525.25, 434.34, 252.52};
+    Chair *livingChair = new Chair(3, prices2);
     livingChair->print();
     delete livingChair;
     livingChair = nullptr;
 
-    //creating dynamic array of chair objects
+    // 3. Dynamic array using DEFAULT constructor
+    //    Each object gets random legs and random prices
+    cout << "=== Chairs #3-#5: Dynamic array with default constructor ===\n";
     Chair *collection = new Chair[SIZE];
-    collection[0].setLegs(4);
-    collection[0].setPrices(441.41, 552.52, 663.63);
-    collection[1].setLegs(4);
-    collection[1].setPrices(484.84, 959.59, 868.68);
-    collection[2].setLegs(4);
-    collection[2].setPrices(626.26, 515.15, 757.57);
     for (int i = 0; i < SIZE; i++)
         collection[i].print();
-    
+
+    delete[] collection;
+    collection = nullptr;
+
     return 0;
 }
