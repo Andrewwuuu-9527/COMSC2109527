@@ -16,12 +16,14 @@ private:
     int legs;
     double * prices;
 public:
-    // constructors
+    // Default constructor: random legs (3 or 4) and random prices ($100.00-$999.99)
     Chair() {
         prices = new double[SIZE];
-        legs = 0;
-        for (int i = 0; i < SIZE; i++)
-            prices[i] = 0;
+        legs = rand() % (MAX_LEGS - MIN_LEGS + 1) + MIN_LEGS;
+        for (int i = 0; i < SIZE; i++) {
+            int priceInCents = rand() % (MAX_PRICE - MIN_PRICE + 1) + MIN_PRICE;
+            prices[i] = priceInCents / 100.0;
+        }
     }
     Chair(int l) {
         prices = new double[SIZE];
