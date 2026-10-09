@@ -25,11 +25,12 @@ public:
             prices[i] = priceInCents / 100.0;
         }
     }
-    Chair(int l) {
+    // Constructor with legs and prices
+    Chair(int l, double p[SIZE]) {
         prices = new double[SIZE];
         legs = l;
         for (int i = 0; i < SIZE; i++)
-            prices[i] = 0;
+            prices[i] = p[i];
     }
 
     // setters and getters
