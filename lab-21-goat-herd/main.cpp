@@ -42,3 +42,26 @@ int main() {
 
     return 0;
 }
+
+// Default constructor: random age (1-20), random name, random color
+Goat::Goat() {
+    age = rand() % (MAX_AGE - MIN_AGE + 1) + MIN_AGE;
+    name = names[rand() % NUM_NAMES];
+    color = colors[rand() % NUM_COLORS];
+}
+
+// Parameter constructor: explicit age, name, color
+Goat::Goat(int a, string n, string c) {
+    age = a;
+    name = n;
+    color = c;
+}
+
+int Goat::getAge() const { return age; }
+string Goat::getName() const { return name; }
+string Goat::getColor() const { return color; }
+
+// print() outputs the goat's info in the format "name (color, age)"
+void Goat::print() const {
+    cout << "    " << name << " (" << color << ", " << age << ")" << endl;
+}
