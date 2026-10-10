@@ -5,6 +5,7 @@
 #include <ctime>
 using namespace std;
 
+// Constants for the Goat class and list size
 const int NUM_NAMES = 15;
 const int NUM_COLORS = 15;
 const int MIN_AGE = 1;
@@ -12,6 +13,7 @@ const int MAX_AGE = 20;
 const int MIN_GOATS = 5;
 const int MAX_GOATS = 20;
 
+// Goat class definition
 class Goat {
 private:
     int age;
@@ -37,6 +39,7 @@ public:
     void print() const;
 };
 
+// DoublyLinkedList class definition
 class DoublyLinkedList {
 private:
     struct Node {
@@ -152,6 +155,19 @@ DoublyLinkedList::~DoublyLinkedList() {
 }
 
 int main() {
+    srand(time(0));
+
+    DoublyLinkedList list;
+    int size = rand() % (MAX_GOATS - MIN_GOATS + 1) + MIN_GOATS;
+
+    // Append randomly-generated Goats
+    for (int i = 0; i < size; i++) {
+        list.push_back(Goat());
+    }
+
+    // Traverse forward and backward
+    list.print();
+    list.print_reverse();
 
     return 0;
 }
