@@ -1,35 +1,45 @@
 #include <iostream>
+
+#include <cstdlib>
+
+#include <ctime>
+
 using namespace std;
 
-const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+const int MIN_NR = 10,
+    MAX_NR = 99,
+    MIN_LS = 5,
+    MAX_LS = 20;
 
 class DoublyLinkedList {
-private:
-    struct Node {
+    private: struct Node {
         int data;
-        Node* prev;
-        Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
+        Node * prev;
+        Node * next;
+        Node(int val, Node * p = nullptr, Node * n = nullptr) {
+            data = val;
             prev = p;
             next = n;
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node * head;
+    Node * tail;
 
-public:
-    // constructor
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
+    public:
+        // constructor
+        DoublyLinkedList() {
+            head = nullptr;
+            tail = nullptr;
+        }
 
     void push_back(int value);
     void push_front(int value);
     void insert_after(int value, int position);
-    void delete_val(int value);   
-    void delete_pos(int position);   
-    void pop_front();              
-    void pop_back();                
+    void delete_val(int value);
+    void delete_pos(int position);
+    void pop_front();
+    void pop_back();
     void print();
     void print_reverse();
     ~DoublyLinkedList();
@@ -37,24 +47,24 @@ public:
 
 // Insert a new node at the end of the list
 void DoublyLinkedList::push_back(int value) {
-    Node* newNode = new Node(value);
+    Node * newNode = new Node(value);
     if (!tail) {
         head = tail = newNode;
     } else {
-        tail->next = newNode;
-        newNode->prev = tail;
+        tail -> next = newNode;
+        newNode -> prev = tail;
         tail = newNode;
     }
 }
 
 // Insert a new node at the front of the list
 void DoublyLinkedList::push_front(int value) {
-    Node* newNode = new Node(value);
+    Node * newNode = new Node(value);
     if (!head) {
         head = tail = newNode;
     } else {
-        newNode->next = head;
-        head->prev = newNode;
+        newNode -> next = head;
+        head -> prev = newNode;
         head = newNode;
     }
 }
@@ -65,55 +75,53 @@ void DoublyLinkedList::insert_after(int value, int position) {
         cout << "Position must be >= 0." << endl;
         return;
     }
-    Node* newNode = new Node(value);
+    Node * newNode = new Node(value);
     if (!head) {
         head = tail = newNode;
         return;
     }
-    Node* temp = head;
+    Node * temp = head;
     for (int i = 0; i < position && temp; ++i)
-        temp = temp->next;
+        temp = temp -> next;
 
     if (!temp) {
         cout << "Position exceeds list size. Node not inserted.\n";
         delete newNode;
         return;
     }
-    newNode->next = temp->next;
-    newNode->prev = temp;
-    if (temp->next)
-        temp->next->prev = newNode;
+    newNode -> next = temp -> next;
+    newNode -> prev = temp;
+    if (temp -> next)
+        temp -> next -> prev = newNode;
     else
         tail = newNode;
-    temp->next = newNode;
+    temp -> next = newNode;
 }
-
 
 // Print the list in forward order
 void DoublyLinkedList::print() {
-    Node* current = head;
+    Node * current = head;
     if (!current) {
         cout << "List is empty" << endl;
         return;
     }
     while (current) {
-        cout << current->data << " ";
-        current = current->next;
+        cout << current -> data << " ";
+        current = current -> next;
     }
     cout << endl;
 }
 
-
 // Print the list in reverse order
 void DoublyLinkedList::print_reverse() {
-    Node* current = tail;
+    Node * current = tail;
     if (!current) {
         cout << "List is empty" << endl;
         return;
     }
     while (current) {
-        cout << current->data << " ";
-        current = current->prev;
+        cout << current -> data << " ";
+        current = current -> prev;
     }
     cout << endl;
 }
@@ -121,35 +129,35 @@ void DoublyLinkedList::print_reverse() {
 // Destructor to free memory
 DoublyLinkedList::~DoublyLinkedList() {
     while (head) {
-        Node* temp = head;
-        head = head->next;
+        Node * temp = head;
+        head = head -> next;
         delete temp;
     }
 }
 
 // Delete a node with a specific value
 void DoublyLinkedList::delete_val(int value) {
-    if (!head) return;   // Empty list
+    if (!head) return; // Empty list
 
     // Find the node with the matching value
-    Node* temp = head;
-    while (temp && temp->data != value)
-        temp = temp->next;
+    Node * temp = head;
+    while (temp && temp -> data != value)
+        temp = temp -> next;
 
-    if (!temp) return;   // Value not found
+    if (!temp) return; // Value not found
 
     // Relink previous node (or update head)
-    if (temp->prev) {
-        temp->prev->next = temp->next;
+    if (temp -> prev) {
+        temp -> prev -> next = temp -> next;
     } else {
-        head = temp->next;
+        head = temp -> next;
     }
 
     // Relink next node (or update tail)
-    if (temp->next) {
-        temp->next->prev = temp->prev;
+    if (temp -> next) {
+        temp -> next -> prev = temp -> prev;
     } else {
-        tail = temp->prev;
+        tail = temp -> prev;
     }
 
     delete temp;
@@ -167,9 +175,9 @@ void DoublyLinkedList::delete_pos(int position) {
     }
 
     // Traverse to the target node
-    Node* temp = head;
+    Node * temp = head;
     for (int i = 1; i < position && temp; i++) {
-        temp = temp->next;
+        temp = temp -> next;
     }
 
     if (!temp) {
@@ -178,17 +186,17 @@ void DoublyLinkedList::delete_pos(int position) {
     }
 
     // Relink previous node (or update head)
-    if (temp->prev) {
-        temp->prev->next = temp->next;
+    if (temp -> prev) {
+        temp -> prev -> next = temp -> next;
     } else {
-        head = temp->next;
+        head = temp -> next;
     }
 
     // Relink next node (or update tail)
-    if (temp->next) {
-        temp->next->prev = temp->prev;
+    if (temp -> next) {
+        temp -> next -> prev = temp -> prev;
     } else {
-        tail = temp->prev;
+        tail = temp -> prev;
     }
 
     delete temp;
@@ -201,12 +209,12 @@ void DoublyLinkedList::pop_front() {
         return;
     }
 
-    Node* temp = head;
-    head = head->next;
+    Node * temp = head;
+    head = head -> next;
     if (head) {
-        head->prev = nullptr;
+        head -> prev = nullptr;
     } else {
-        tail = nullptr;   // List became empty
+        tail = nullptr; // List became empty
     }
     delete temp;
 }
@@ -218,12 +226,12 @@ void DoublyLinkedList::pop_back() {
         return;
     }
 
-    Node* temp = tail;
-    tail = tail->prev;
+    Node * temp = tail;
+    tail = tail -> prev;
     if (tail) {
-        tail->next = nullptr;
+        tail -> next = nullptr;
     } else {
-        head = nullptr;   // List became empty
+        head = nullptr; // List became empty
     }
     delete temp;
 }
