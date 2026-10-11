@@ -228,22 +228,59 @@ void DoublyLinkedList::pop_back() {
     delete temp;
 }
 
-// Driver program
 int main() {
+    srand(time(0));
+
     DoublyLinkedList list;
-    int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
 
-    for (int i = 0; i < size; ++i)
-        list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
-    cout << "List forward: ";
+    // Build a list of random numbers
+    int size = rand() % (MAX_LS - MIN_LS + 1) + MIN_LS;
+    for (int i = 0; i < size; i++) {
+        list.push_back(rand() % (MAX_NR - MIN_NR + 1) + MIN_NR);
+    }
+
+    cout << "Initial list forward: ";
     list.print();
-
-    cout << "List backward: ";
+    cout << "Initial list backward: ";
     list.print_reverse();
 
-    cout << "Deleting list, then trying to print.\n";
-    cout << "List forward: ";
+    // Test delete_pos() -- delete by position
+    cout << "\n--- Testing delete_pos(2) ---\n";
+    list.delete_pos(2);
+    cout << "After delete_pos(2): ";
     list.print();
+
+    cout << "\n--- Testing delete_pos(1) [head] ---\n";
+    list.delete_pos(1);
+    cout << "After delete_pos(1): ";
+    list.print();
+
+    // Test pop_front()
+    cout << "\n--- Testing pop_front() ---\n";
+    list.pop_front();
+    cout << "After pop_front(): ";
+    list.print();
+
+    // Test pop_back()
+    cout << "\n--- Testing pop_back() ---\n";
+    list.pop_back();
+    cout << "After pop_back(): ";
+    list.print();
+
+    // Test delete_val() -- delete by value
+    cout << "\n--- Testing delete_val() ---\n";
+    cout << "Enter a value to delete: ";
+    int val;
+    cin >> val;
+    list.delete_val(val);
+    cout << "After delete_val(" << val << "): ";
+    list.print();
+
+    // Final traversal
+    cout << "\nFinal list forward: ";
+    list.print();
+    cout << "Final list backward: ";
+    list.print_reverse();
 
     return 0;
 }
