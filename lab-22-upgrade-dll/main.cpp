@@ -127,6 +127,107 @@ DoublyLinkedList::~DoublyLinkedList() {
     }
 }
 
+// Delete a node with a specific value
+void DoublyLinkedList::delete_val(int value) {
+    if (!head) return;   // Empty list
+
+    // Find the node with the matching value
+    Node* temp = head;
+    while (temp && temp->data != value)
+        temp = temp->next;
+
+    if (!temp) return;   // Value not found
+
+    // Relink previous node (or update head)
+    if (temp->prev) {
+        temp->prev->next = temp->next;
+    } else {
+        head = temp->next;
+    }
+
+    // Relink next node (or update tail)
+    if (temp->next) {
+        temp->next->prev = temp->prev;
+    } else {
+        tail = temp->prev;
+    }
+
+    delete temp;
+}
+
+// Delete a node at a specific position (1-based index)
+void DoublyLinkedList::delete_pos(int position) {
+    if (!head) {
+        cout << "List is empty. Nothing to delete." << endl;
+        return;
+    }
+    if (position < 1) {
+        cout << "Position must be >= 1." << endl;
+        return;
+    }
+
+    // Traverse to the target node
+    Node* temp = head;
+    for (int i = 1; i < position && temp; i++) {
+        temp = temp->next;
+    }
+
+    if (!temp) {
+        cout << "Position exceeds list size. Nothing deleted." << endl;
+        return;
+    }
+
+    // Relink previous node (or update head)
+    if (temp->prev) {
+        temp->prev->next = temp->next;
+    } else {
+        head = temp->next;
+    }
+
+    // Relink next node (or update tail)
+    if (temp->next) {
+        temp->next->prev = temp->prev;
+    } else {
+        tail = temp->prev;
+    }
+
+    delete temp;
+}
+
+// Remove the first node of the list
+void DoublyLinkedList::pop_front() {
+    if (!head) {
+        cout << "List is empty. Nothing to pop." << endl;
+        return;
+    }
+
+    Node* temp = head;
+    head = head->next;
+    if (head) {
+        head->prev = nullptr;
+    } else {
+        tail = nullptr;   // List became empty
+    }
+    delete temp;
+}
+
+// Remove the last node of the list
+void DoublyLinkedList::pop_back() {
+    if (!tail) {
+        cout << "List is empty. Nothing to pop." << endl;
+        return;
+    }
+
+    Node* temp = tail;
+    tail = tail->prev;
+    if (tail) {
+        tail->next = nullptr;
+    } else {
+        head = nullptr;   // List became empty
+    }
+    delete temp;
+}
+
 // Driver program
 int main() {
     DoublyLinkedList list;
@@ -141,7 +242,6 @@ int main() {
     list.print_reverse();
 
     cout << "Deleting list, then trying to print.\n";
-    list.~DoublyLinkedList();
     cout << "List forward: ";
     list.print();
 
