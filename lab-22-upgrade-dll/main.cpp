@@ -35,6 +35,98 @@ public:
     ~DoublyLinkedList();
 };
 
+// Insert a new node at the end of the list
+void DoublyLinkedList::push_back(int value) {
+    Node* newNode = new Node(value);
+    if (!tail) {
+        head = tail = newNode;
+    } else {
+        tail->next = newNode;
+        newNode->prev = tail;
+        tail = newNode;
+    }
+}
+
+// Insert a new node at the front of the list
+void DoublyLinkedList::push_front(int value) {
+    Node* newNode = new Node(value);
+    if (!head) {
+        head = tail = newNode;
+    } else {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+}
+
+// Insert a new node after a given position
+void DoublyLinkedList::insert_after(int value, int position) {
+    if (position < 0) {
+        cout << "Position must be >= 0." << endl;
+        return;
+    }
+    Node* newNode = new Node(value);
+    if (!head) {
+        head = tail = newNode;
+        return;
+    }
+    Node* temp = head;
+    for (int i = 0; i < position && temp; ++i)
+        temp = temp->next;
+
+    if (!temp) {
+        cout << "Position exceeds list size. Node not inserted.\n";
+        delete newNode;
+        return;
+    }
+    newNode->next = temp->next;
+    newNode->prev = temp;
+    if (temp->next)
+        temp->next->prev = newNode;
+    else
+        tail = newNode;
+    temp->next = newNode;
+}
+
+
+// Print the list in forward order
+void DoublyLinkedList::print() {
+    Node* current = head;
+    if (!current) {
+        cout << "List is empty" << endl;
+        return;
+    }
+    while (current) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+
+// Print the list in reverse order
+void DoublyLinkedList::print_reverse() {
+    Node* current = tail;
+    if (!current) {
+        cout << "List is empty" << endl;
+        return;
+    }
+    while (current) {
+        cout << current->data << " ";
+        current = current->prev;
+    }
+    cout << endl;
+}
+
+// Destructor to free memory
+DoublyLinkedList::~DoublyLinkedList() {
+    while (head) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
 // Driver program
 int main() {
     DoublyLinkedList list;
