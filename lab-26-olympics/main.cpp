@@ -117,10 +117,22 @@ int main() {
         times[1][3][2] += times[0][3][2];
     }
 
-    // Output results 
-    cout << "Number of simulations: " << NUM_SIMULATIONS << "\n";
-    cout << "Last run Read (Vector): " << times[0][0][0] << " ns\n";
-    cout << "Last run Sort (Vector): " << times[0][1][0] << " ns\n";
+    // Output the average times
+    cout << "   Number of simulations: " << NUM_SIMULATIONS << "\n";
+    cout << "    Operation\tVector\t\tList\t\tSet\n";
+    cout << "    ---------\t------\t\t----\t\t---\n";
+
+    string opNames[4] = {"Read", "Sort", "Insert", "Delete"};
+    
+    for (int i = 0; i < 4; i++) {
+        cout << setw(13) << right << opNames[i] << "\t";
+        for (int j = 0; j < 3; j++) {
+            // Calculate average time for each operation and data structure
+            long long avg = times[1][i][j] / NUM_SIMULATIONS;
+            cout << setw(6) << right << avg << "\t\t";
+        }
+        cout << "\n";
+    }
 
     return 0;
 }
