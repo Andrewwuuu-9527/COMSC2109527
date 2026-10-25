@@ -103,6 +103,16 @@ int main() {
                 cout << "All goats have aged by 1 year.\n";
                 break;
             }
+
+            // Milestone 7: list::sort
+            case 11: {
+                trip.sort([](const Goat& a, const Goat& b) {
+                    return a.get_age() < b.get_age();
+                });
+                cout << "Goats sorted by age.\n";
+                display_trip(trip);
+                break;
+            }
         }
     }
     return 0;
@@ -120,8 +130,9 @@ int main_menu() {
         cout << "[8] Calculate total age (accumulate)\n";
         cout << "[9] Any older than 15 (any_of)\n";
         cout << "[10] Increase all ages by 1 (for_each)\n";
+        cout << "[11] Sort by age (list::sort)\n";
         cout << "Choice --> "; cin >> choice;
-        if (cin.fail() || choice < 1 || choice > 10) { cin.clear(); cin.ignore(10000, '\n'); }
+        if (cin.fail() || choice < 1 || choice > 11) { cin.clear(); cin.ignore(10000, '\n'); }
         else valid = true;
     }
     return choice;
