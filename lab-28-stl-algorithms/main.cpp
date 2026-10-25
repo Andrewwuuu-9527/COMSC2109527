@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <numeric>
 #include "Goat.h"
 using namespace std;
 
@@ -73,6 +74,15 @@ int main() {
                 cout << "Youngest: " << minIt->get_name() << " (" << minIt->get_age() << ")\n";
                 break;
             }
+
+            // Milestone 4: accumulate
+            case 8: {
+                int totalAge = accumulate(trip.begin(), trip.end(), 0, [](int sum, const Goat& g) {
+                    return sum + g.get_age();
+                });
+                cout << "Total age of all goats: " << totalAge << "\n";
+                break;
+            }
         }
     }
     return 0;
@@ -87,8 +97,9 @@ int main_menu() {
         cout << "[5] Search by name (find_if)\n";
         cout << "[6] Count older than age (count_if)\n";
         cout << "[7] Find oldest/youngest (max/min_element)\n";
+        cout << "[8] Calculate total age (accumulate)\n";
         cout << "Choice --> "; cin >> choice;
-        if (cin.fail() || choice < 1 || choice > 7) { cin.clear(); cin.ignore(10000, '\n'); }
+        if (cin.fail() || choice < 1 || choice > 8) { cin.clear(); cin.ignore(10000, '\n'); }
         else valid = true;
     }
     return choice;
