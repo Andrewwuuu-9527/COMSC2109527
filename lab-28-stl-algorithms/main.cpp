@@ -45,6 +45,7 @@ int main() {
             case 3: display_trip(trip); break;
             case 4: again = false; break;
             
+            // Milestone 1: find_if
             case 5: {
                 string searchName; cout << "Enter name: "; cin >> searchName;
                 auto it = find_if(trip.begin(), trip.end(), [&](const Goat& g) { return g.get_name() == searchName; });
@@ -93,6 +94,15 @@ int main() {
                 else cout << "No goats older than 15.\n";
                 break;
             }
+
+            // Milestone 6: for_each
+            case 10: {
+                for_each(trip.begin(), trip.end(), [](Goat& g) {
+                    g.set_age(g.get_age() + 1);
+                });
+                cout << "All goats have aged by 1 year.\n";
+                break;
+            }
         }
     }
     return 0;
@@ -109,8 +119,9 @@ int main_menu() {
         cout << "[7] Find oldest/youngest (max/min_element)\n";
         cout << "[8] Calculate total age (accumulate)\n";
         cout << "[9] Any older than 15 (any_of)\n";
+        cout << "[10] Increase all ages by 1 (for_each)\n";
         cout << "Choice --> "; cin >> choice;
-        if (cin.fail() || choice < 1 || choice > 9) { cin.clear(); cin.ignore(10000, '\n'); }
+        if (cin.fail() || choice < 1 || choice > 10) { cin.clear(); cin.ignore(10000, '\n'); }
         else valid = true;
     }
     return choice;
