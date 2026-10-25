@@ -83,6 +83,16 @@ int main() {
                 cout << "Total age of all goats: " << totalAge << "\n";
                 break;
             }
+
+            // Milestone 5: any_of
+            case 9: {
+                bool hasOldGoat = any_of(trip.begin(), trip.end(), [](const Goat& g) {
+                    return g.get_age() > 15;
+                });
+                if (hasOldGoat) cout << "Yes, there is at least one goat older than 15.\n";
+                else cout << "No goats older than 15.\n";
+                break;
+            }
         }
     }
     return 0;
@@ -98,8 +108,9 @@ int main_menu() {
         cout << "[6] Count older than age (count_if)\n";
         cout << "[7] Find oldest/youngest (max/min_element)\n";
         cout << "[8] Calculate total age (accumulate)\n";
+        cout << "[9] Any older than 15 (any_of)\n";
         cout << "Choice --> "; cin >> choice;
-        if (cin.fail() || choice < 1 || choice > 8) { cin.clear(); cin.ignore(10000, '\n'); }
+        if (cin.fail() || choice < 1 || choice > 9) { cin.clear(); cin.ignore(10000, '\n'); }
         else valid = true;
     }
     return choice;
