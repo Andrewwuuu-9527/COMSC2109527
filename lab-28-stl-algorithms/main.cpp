@@ -63,6 +63,16 @@ int main() {
                 cout << "Number of goats older than " << ageLimit << ": " << count << "\n";
                 break;
             }
+
+            // Milestone 3: max_element / min_element
+            case 7: {
+                if (trip.empty()) { cout << "Trip is empty.\n"; break; }
+                auto maxIt = max_element(trip.begin(), trip.end(), [](const Goat& a, const Goat& b) { return a.get_age() < b.get_age(); });
+                auto minIt = min_element(trip.begin(), trip.end(), [](const Goat& a, const Goat& b) { return a.get_age() < b.get_age(); });
+                cout << "Oldest: " << maxIt->get_name() << " (" << maxIt->get_age() << ")\n";
+                cout << "Youngest: " << minIt->get_name() << " (" << minIt->get_age() << ")\n";
+                break;
+            }
         }
     }
     return 0;
@@ -76,8 +86,9 @@ int main_menu() {
         cout << "[1] Add\n[2] Delete\n[3] List\n[4] Quit\n";
         cout << "[5] Search by name (find_if)\n";
         cout << "[6] Count older than age (count_if)\n";
+        cout << "[7] Find oldest/youngest (max/min_element)\n";
         cout << "Choice --> "; cin >> choice;
-        if (cin.fail() || choice < 1 || choice > 6) { cin.clear(); cin.ignore(10000, '\n'); }
+        if (cin.fail() || choice < 1 || choice > 7) { cin.clear(); cin.ignore(10000, '\n'); }
         else valid = true;
     }
     return choice;
