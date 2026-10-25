@@ -44,18 +44,23 @@ int main() {
             case 3: display_trip(trip); break;
             case 4: again = false; break;
             
-            // Milestone 1: find_if
             case 5: {
-                string searchName;
-                cout << "Enter name to search: ";
-                cin >> searchName;
-                auto it = find_if(trip.begin(), trip.end(), [&](const Goat& g) {
-                    return g.get_name() == searchName;
+                string searchName; cout << "Enter name: "; cin >> searchName;
+                auto it = find_if(trip.begin(), trip.end(), [&](const Goat& g) { return g.get_name() == searchName; });
+                if (it != trip.end()) cout << "Found: " << it->get_name() << "\n";
+                else cout << "Not found.\n";
+                break;
+            }
+            
+            // Milestone 2: count_if
+            case 6: {
+                int ageLimit;
+                cout << "Enter age limit: ";
+                cin >> ageLimit;
+                int count = count_if(trip.begin(), trip.end(), [&](const Goat& g) {
+                    return g.get_age() > ageLimit;
                 });
-                if (it != trip.end())
-                    cout << "Found: " << it->get_name() << " (" << it->get_age() << ", " << it->get_color() << ")\n";
-                else
-                    cout << "Goat not found.\n";
+                cout << "Number of goats older than " << ageLimit << ": " << count << "\n";
                 break;
             }
         }
@@ -65,18 +70,15 @@ int main() {
 
 // Display the main menu and return the user's choice
 int main_menu() {
-    int choice;
-    bool valid = false;
+    int choice; bool valid = false;
     while (!valid) {
         cout << "\n*** GOAT MANAGER 3001 ***\n";
-        cout << "[1] Add a goat\n[2] Delete a goat\n[3] List goats\n[4] Quit\n";
+        cout << "[1] Add\n[2] Delete\n[3] List\n[4] Quit\n";
         cout << "[5] Search by name (find_if)\n";
-        cout << "Choice --> ";
-        cin >> choice;
-        if (cin.fail() || choice < 1 || choice > 5) {
-            cin.clear(); cin.ignore(10000, '\n');
-            cout << "Invalid choice.\n";
-        } else valid = true;
+        cout << "[6] Count older than age (count_if)\n";
+        cout << "Choice --> "; cin >> choice;
+        if (cin.fail() || choice < 1 || choice > 6) { cin.clear(); cin.ignore(10000, '\n'); }
+        else valid = true;
     }
     return choice;
 }
