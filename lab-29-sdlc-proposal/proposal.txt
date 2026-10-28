@@ -1,0 +1,15 @@
+Project Overview:
+This project is a discrete-event simulation of a Theme Park. It will simulate how tourists queue up for three different rides (Roller Coaster, Ferris Wheel, Haunted House) over a period of 25 time ticks (each tick represents 10 minutes). The goal is to observe how queues build up, how rides operate, and how random events (like ride breakdowns) affect the flow of visitors.
+
+Implementation:
+I will use a std::map to store ride data. The key will be a string representing the ride name. The value will be a std::array of 3 std::lists. 
+- Index 0: std::list of visitors currently waiting in the queue.
+- Index 1: std::list of visitors currently riding.
+- Index 2: std::list of maintenance logs (e.g., "Ride broken down", "Ride fixed").
+The initial pool of visitors will be read from an external file (visitors.txt). A function will handle the simulation loop over 25 time periods.
+
+Simulated Events:
+During each time period, new visitors arrive and join the queues. Rides will process visitors (moving them from queue to ride). Randomly, a ride might break down, moving it to a maintenance state where it cannot take new riders until fixed.
+
+Time Periods:
+I chose 25 time periods. Each period represents 10 minutes in the theme park, covering a total of 250 minutes (about 4 hours) of park operation. This is enough time to see dynamic changes in queue lengths and ride operations.
