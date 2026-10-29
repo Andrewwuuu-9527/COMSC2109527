@@ -1,4 +1,4 @@
-// COMSC-210 | Lab 29 | Andrew
+// COMSC-210 | Lab 30 | Andrew
 #include <iostream>
 #include <fstream>
 #include <map>
@@ -6,78 +6,118 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
-// PSEUDOCODE (Step-by-step logic framework for the final simulation)
+// Global constants
+const int TOTAL_TICKS = 25;
+const int RIDE_CAPACITY = 2;
 
-/*
- * Function: runSimulation
- * Parameters: std::map<string, array<list<string>, 3>>& park, int totalTicks
- * 
- * BEGIN runSimulation
- *   FOR tick = 1 to totalTicks:
- *     Print "--- Time Tick " << tick << " ---"
- *     
- *     FOR EACH ride IN park:
- *       // 1. Check maintenance status
- *       IF ride's maintenance list is not empty:
- *         IF random event == fix:
- *           clear maintenance list
- *           Print "Ride is fixed!"
- *         ELSE:
- *           Print "Ride is broken, skipping..."
- *           CONTINUE to next ride
- *           
- *       // 2. Process queue
- *       IF ride's queue list is not empty:
- *         Move first person from Queue (index 0) to Riding (index 1)
- *         
- *       // 3. Complete ride
- *       IF ride's riding list is not empty:
- *         Remove first person from Riding (index 1)
- *         
- *       // 4. Random Breakdown
- *       IF random chance:
- *         Add "Broken" to Maintenance list (index 2)
- *         
- *       Print current queue and riding status
- *   END FOR
- * END runSimulation
- */
-
-// MOCKUP (Wireframe code)
-
-// Mockup function to demonstrate data passing
-void displayParkStatus(const map<string, array<list<string>, 3>>& park) {
-    cout << "Initial Mockup State:\n";
-    for (const auto& pair : park) {
-        cout << "Ride: " << pair.first << endl;
-        // pair.second is the array of 3 lists
-        cout << "  Queue size: " << pair.second[0].size() << endl;
-        cout << "  Riding size: " << pair.second[1].size() << endl;
-        cout << "  Maintenance logs: " << pair.second[2].size() << endl;
+// Function 1: Read visitor data from external file
+vector<string> loadVisitors(const string& filename) {
+    vector<string> visitors;
+    ifstream fin(filename);
+    if (!fin) {
+        cout << "Error: Cannot open " << filename << endl;
+        return visitors;
     }
-    cout << "-----------------------------------\n";
+    string name;
+    while (fin >> name) {
+        visitors.push_back(name);
+    }
+    fin.close();
+    return visitors;
+}
+
+// Function 2: Display current park status
+void displayParkStatus(const map<string, array<list<string>, 3>>& park) {
+    cout << "--- Park Status ---\n";
+    for (const auto& pair : park) {
+        cout << "[" << pair.first << "] "
+             << "Queue: " << pair.second[0].size() << " | "
+             << "Riding: " << pair.second[1].size() << " | "
+             << "Logs: " << pair.second[2].size() << "\n";
+    }
+    cout << "--------------------\n";
+}
+
+// Function 3: Core simulation logic
+void runSimulation(map<string, array<list<string>, 3>>& park, vector<string>& visitors) {
+    int visitorIndex = 0;
+
+    for (int tick = 1; tick <= TOTAL_TICKS; tick++) {
+        cout << "\n=== TIME TICK " << tick << " ===\n";
+
+        // 1. New visitors enter the park (randomly assigned to different ride queues)
+        if (visitorIndex < visitors.size()) {
+            int numNewArrivals = rand() % 3 + 1; // 1 to 3 people
+            for (int i = 0; i < numNewArrivals && visitorIndex < visitors.size(); i++) {
+                // Randomly select a ride
+                auto it = park.begin();
+                advance(it, rand() % park.size());
+                it->second[0].push_back(visitors[visitorIndex]);
+                cout << visitors[visitorIndex] << " joined the queue for " << it->first << ".\n";
+                visitorIndex++;
+            }
+        }
+
+        // 2. Rides process visitors
+        for (auto& pair : park) {
+            string rideName = pair.first;
+            auto& queue = pair.second[0];
+            auto& riding = pair.second[1];
+            auto& logs = pair.second[2];
+
+            // Process visitors currently riding (unload the ride)
+            while (!riding.empty()) {
+                cout << riding.front() << " finished riding " << rideName << ".\n";
+                riding.pop_front();
+            }
+
+            // Process queued visitors (board the ride, max 2 per ride)
+            int boarded = 0;
+            while (!queue.empty() && boarded < RIDE_CAPACITY) {
+                string person = queue.front();
+                queue.pop_front();
+                riding.push_back(person);
+                cout << person << " boarded " << rideName << ".\n";
+                boarded++;
+            }
+
+            // Random event (10% chance of breakdown)
+            if (rand() % 10 == 0) {
+                logs.push_back("Ride broke down at tick " + to_string(tick));
+                cout << "!!! " << rideName << " broke down!\n";
+            }
+        }
+
+        // Display status after each tick
+        displayParkStatus(park);
+    }
 }
 
 int main() {
-    // 1. Declare the nested data structure
-    // Key: string (Ride Name), Value: array of 3 lists
+    srand(time(0));
+
+    // Initialize external nested data structure
+    // map: Key = ride name, Value = array<list, 3> (0: queue, 1: riding, 2: logs)
     map<string, array<list<string>, 3>> park;
+    park["Roller Coaster"] = array<list<string>, 3>();
+    park["Ferris Wheel"] = array<list<string>, 3>();
+    park["Haunted House"] = array<list<string>, 3>();
 
-    // 2. Setup some dummy data (Mockup style)
-    // In the final version, this will read from visitors.txt
-    park["Roller Coaster"][0].push_back("Alice"); // Alice is in queue
-    park["Roller Coaster"][0].push_back("Bob");
-    park["Roller Coaster"][1].push_back("Charlie"); // Charlie is riding
-    
-    park["Ferris Wheel"][0].push_back("David");
-    
-    // 3. Call the function to prove the data structure is valid and passing works
-    displayParkStatus(park);
+    // Load external file
+    vector<string> visitors = loadVisitors("visitors.txt");
+    if (visitors.empty()) {
+        cout << "No visitors loaded. Exiting.\n";
+        return 1;
+    }
+    cout << "Loaded " << visitors.size() << " visitors from file.\n";
 
-    // 4. Here is where the runSimulation(park, 25); will go in Lab 30.
-    cout << "Mockup complete. Simulation logic will be added in Lab 30.\n";
+    // Run the simulation
+    runSimulation(park, visitors);
 
+    cout << "\nAlpha Release Simulation Complete.\n";
     return 0;
 }
