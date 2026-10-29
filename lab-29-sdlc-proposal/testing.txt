@@ -1,0 +1,41 @@
+SDLC Testing Phase - Unit Testing
+
+Function Tested: loadVisitors(const string& filename)
+
+Description:
+I will test the loadVisitors function to ensure it properly reads data from the external file.
+The unit test will verify:
+1. The function returns a vector of the correct size (100 elements).
+2. The function handles a non-existent file gracefully (returns an empty vector and outputs an error message).
+
+Below is the driver program for the unit test:
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include "main.cpp" // Including the main cpp to access the function
+
+void runUnitTest() {
+    cout << "Running Unit Test for loadVisitors()...\n";
+    
+    // Test Case 1: Valid file
+    vector<string> visitors = loadVisitors("visitors.txt");
+    if (visitors.size() == 100) {
+        cout << "[PASS] Successfully loaded 100 visitors.\n";
+    } else {
+        cout << "[FAIL] Expected 100 visitors, got " << visitors.size() << ".\n";
+    }
+
+    // Test Case 2: Invalid file
+    vector<string> emptyList = loadVisitors("non_existent_file.txt");
+    if (emptyList.empty()) {
+        cout << "[PASS] Correctly handled missing file (returned empty vector).\n";
+    } else {
+        cout << "[FAIL] Did not handle missing file properly.\n";
+    }
+}
+
+int main() {
+    runUnitTest();
+    return 0;
+}
