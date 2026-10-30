@@ -1,0 +1,41 @@
+Project Bug Log (Maintenance Phase)
+
+Bug #1: File Not Found Error
+- Description: The program crashed immediately when 'visitors.txt' was missing.
+- Fix: Added an ifstream check `if (!fin)` in `loadVisitors()` and returned an empty vector to handle it gracefully.
+
+Bug #2: Infinite Ride Loop
+- Description: Visitors were not leaving the ride in the Alpha version, causing the 'riding' list to grow infinitely.
+- Fix: Added a `while (!riding.empty())` loop at the beginning of each ride process to pop visitors off before boarding new ones.
+
+Bug #3: Ride Status Tracking
+- Description: I couldn't tell if a ride was broken or operating just by looking at the logs.
+- Fix: Implemented a logic where `logs.size() % 2 != 0` means the ride is currently broken.
+
+Bug #4: Random Number Generation
+- Description: The simulation outputted the exact same sequence of events every time it ran.
+- Fix: Added `srand(time(0))` at the start of `main()` to seed the random number generator.
+
+Bug #5: Iterator Out of Bounds
+- Description: When generating a random ride, `advance(it, rand() % park.size())` sometimes caused a crash if the map was empty.
+- Fix: Ensured the map is populated with 3 rides before the simulation loop starts.
+
+Bug #6: Misaligned Table Output
+- Description: The park status table looked messy because ride names have different lengths.
+- Fix: Used `<iomanip>`, specifically `setw(16)` and `left` alignment, to create perfectly aligned columns.
+
+Bug #7: Visitors Exiting the Park
+- Description: The Alpha version moved visitors to 'riding' but never truly removed them from the simulation.
+- Fix: When popping from the `riding` list, printed an '[Exit]' message to simulate them leaving the park, reducing memory overhead.
+
+Bug #8: Negative Random Modulo
+- Description: Sometimes the `rand() % 4` logic skipped arrivals for many ticks.
+- Fix: Adjusted the math to `rand() % 4 + 1` to ensure a consistent flow of 1 to 4 arrivals per tick.
+
+Bug #9: Ride Capacity Ignored
+- Description: In the first draft, too many people boarded at once.
+- Fix: Added a `boarded` counter variable in the while loop to stop when it reaches `RIDE_CAPACITY`.
+
+Bug #10: Unclear Variable Names
+- Description: I initially used `q` and `r` for queue and riding lists, making the code hard to read.
+- Fix: Renamed them to `queue`, `riding`, and `logs` using array indices `[0]`, `[1]`, and `[2]`.
