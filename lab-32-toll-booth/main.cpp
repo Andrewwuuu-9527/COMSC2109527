@@ -24,6 +24,9 @@ int main() {
 
     deque<Car> lane;
 
+    lane.push_back(Car());
+    lane.push_back(Car());
+
     cout << "Initial queue:" << endl;
     printQueue(lane);
 
