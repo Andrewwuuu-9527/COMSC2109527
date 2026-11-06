@@ -36,8 +36,11 @@ int main() {
 
     cout << "Initial queue:\n";
     for (int i = 0; i < NUM_LANES; i++) {
+        // Add two cars to each lane
+        for (int j = 0; j < 2; j++) {
+            plaza[i].push_back(Car());
+        }
         printLane(i + 1, plaza[i]);
-    
     }
 
     return 0;
