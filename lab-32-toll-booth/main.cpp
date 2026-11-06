@@ -19,9 +19,8 @@ const int JOIN_PROB = 39;
 const int SWITCH_PROB = 15;
 const int EMPTY_JOIN_PROB = 50;
 
-
 // Function to print the contents of a lane
-void printLane(int laneNum, deque<Car> lane) {
+void printLane(int laneNum, deque < Car > lane) {
     cout << "Lane " << laneNum << " Queue: " << endl;
     if (lane.empty()) {
         cout << "    Empty" << endl;
@@ -37,7 +36,7 @@ int main() {
     srand(time(0));
 
     // Create an array of deques to represent the lanes in the toll plaza
-    array<deque<Car>, NUM_LANES> plaza;
+    array < deque < Car > , NUM_LANES > plaza;
 
     cout << "Initial queue:\n";
     for (int i = 0; i < NUM_LANES; i++) {
@@ -62,20 +61,18 @@ int main() {
                     plaza[i].push_back(Car());
                     cout << "Lane: " << i + 1 << " Joined: ";
                     plaza[i].back().print();
-                } 
-            }else {
+                }
+            } else {
                 // If the lane is not empty, either remove the front car or add a new car with a 50% chance
                 if (chance < PAY_PROB) {
                     cout << "Lane: " << i + 1 << " Joined: ";
                     plaza[i].front().print();
                     plaza[i].pop_front();
-                }
-                else if (chance < PAY_PROB + JOIN_PROB) {
+                } else if (chance < PAY_PROB + JOIN_PROB) {
                     plaza[i].push_back(Car());
                     cout << "Lane: " << i + 1 << " Joined: ";
                     plaza[i].back().print();
-                }
-                else {
+                } else {
                     int newLane = rand() % NUM_LANES;
 
                     while (newLane == i) {
@@ -97,7 +94,7 @@ int main() {
         for (int i = 0; i < NUM_LANES; i++) {
             printLane(i + 1, plaza[i]);
         }
-    }    
+    }
 
     return 0;
 }
