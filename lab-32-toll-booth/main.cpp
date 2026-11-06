@@ -77,11 +77,18 @@ int main() {
                 }
                 else {
                     int newLane = rand() % NUM_LANES;
+
+                    while (newLane == i) {
+                        newLane = rand() % NUM_LANES;
+                    }
+
                     Car switchingCar = plaza[i].back();
                     plaza[i].pop_back();
                     plaza[newLane].push_back(switchingCar);
+
                     cout << "Lane: " << i + 1 << " Switched: ";
                     switchingCar.print();
+
                 }
             }
         }
