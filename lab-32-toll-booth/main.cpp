@@ -43,5 +43,40 @@ int main() {
         printLane(i + 1, plaza[i]);
     }
 
+    const int TOTAL_TICKS = 20;
+
+    for (int time = 1; time <= TOTAL_TICKS; time++) {
+        cout << "\nTime: " << time << "\n";
+
+        for (int i = 0; i < NUM_LANES; i++) {
+            int chance = rand() % 100;
+
+            if (plaza[i].empty()) {
+                // If the lane is empty, add a new car with a 50% chance
+                if (chance < 50) {
+                    plaza[i].push_back(Car());
+                    cout << "Lane: " << i + 1 << " Joined: ";
+                    plaza[i].back().print();
+                } 
+            }else {
+                // If the lane is not empty, either remove the front car or add a new car with a 50% chance
+                if (chance < 50) {
+                    cout << "Lane: " << i + 1 << " Joined: ";
+                    plaza[i].front().print();
+                    plaza[i].pop_front();
+                }else {
+                    plaza[i].push_back(Car());
+                    cout << "Lane: " << i + 1 << " Joined: ";
+                    plaza[i].back().print();
+                }
+            }
+        }
+
+        // Print the final state of the lanes
+        for (int i = 0; i < NUM_LANES; i++) {
+            printLane(i + 1, plaza[i]);
+        }
+    }    
+
     return 0;
 }
