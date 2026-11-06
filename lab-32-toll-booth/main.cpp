@@ -30,5 +30,20 @@ int main() {
     cout << "Initial queue:" << endl;
     printQueue(lane);
 
+    // Simulate the passage of time and random operations on the queue
+    int time = 1;
+    while (!lane.empty()) {
+        cout << "\nTime: " << time << " ";
+
+        int chance = rand() % 100 +1;   // Random number between 1 and 100
+
+        cout << "Operation: Random value is " << chance << endl;
+
+        printQueue(lane);
+        time++;
+
+        if (time > 5) break; // Limit the simulation to 5 time units for demonstration
+    }
+
     return 0;
 }
