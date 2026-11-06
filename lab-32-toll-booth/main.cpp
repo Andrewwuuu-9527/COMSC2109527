@@ -32,17 +32,23 @@ int main() {
 
     // Simulate the passage of time and random operations on the queue
     int time = 1;
-    while (!lane.empty()) {
-        cout << "\nTime: " << time << " ";
-
+    while (!lane.empty()) {    
         int chance = rand() % 100 +1;   // Random number between 1 and 100
 
-        cout << "Operation: Random value is " << chance << endl;
+        if (chance <= 55) {
+            // 55% chance to remove a car from the front of the queue
+            cout << "\nTime: " << time << " Operation: Car paid: ";
+            lane.front().print();
+            lane.pop_front();
+        }else{
+            // 45% chance for a new car to join the queue
+            lane.push_back(Car());
+            cout << "\nTime: " << time << " Operation: Joined lane: ";
+            lane.back().print();
+        }
 
         printQueue(lane);
         time++;
-
-        if (time > 5) break; // Limit the simulation to 5 time units for demonstration
     }
 
     return 0;
