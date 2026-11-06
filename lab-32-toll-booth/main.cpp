@@ -14,6 +14,11 @@
 using namespace std;
 
 const int NUM_LANES = 4;
+const int PAY_PROB = 46;
+const int JOIN_PROB = 39;
+const int SWITCH_PROB = 15;
+const int EMPTY_JOIN_PROB = 50;
+
 
 // Function to print the contents of a lane
 void printLane(int laneNum, deque<Car> lane) {
@@ -53,21 +58,30 @@ int main() {
 
             if (plaza[i].empty()) {
                 // If the lane is empty, add a new car with a 50% chance
-                if (chance < 50) {
+                if (chance < EMPTY_JOIN_PROB) {
                     plaza[i].push_back(Car());
                     cout << "Lane: " << i + 1 << " Joined: ";
                     plaza[i].back().print();
                 } 
             }else {
                 // If the lane is not empty, either remove the front car or add a new car with a 50% chance
-                if (chance < 50) {
+                if (chance < PAY_PROB) {
                     cout << "Lane: " << i + 1 << " Joined: ";
                     plaza[i].front().print();
                     plaza[i].pop_front();
-                }else {
+                }
+                else if (chance < PAY_PROB + JOIN_PROB) {
                     plaza[i].push_back(Car());
                     cout << "Lane: " << i + 1 << " Joined: ";
                     plaza[i].back().print();
+                }
+                else {
+                    int newLane = rand() % NUM_LANES;
+                    Car switchingCar = plaza[i].back();
+                    plaza[i].pop_back();
+                    plaza[newLane].push_back(switchingCar);
+                    cout << "Lane: " << i + 1 << " Switched: ";
+                    switchingCar.print();
                 }
             }
         }
