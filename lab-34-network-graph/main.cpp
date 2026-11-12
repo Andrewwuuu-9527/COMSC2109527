@@ -87,6 +87,33 @@ class Graph {
         }
         cout << endl;
     }
+
+    void shortestPath(int src) {
+        vector<int> dist(SIZE, INT_MAX);
+        priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+        dist[src] = 0;
+        pq.push(make_pair(0, src));
+
+         while (!pq.empty()) {
+            int d = pq.top().first;
+            int u = pq.top().second;
+            pq.pop();
+
+            if (d > dist[u]) continue;
+
+            for (Pair v : adjList[u]) {
+                if (dist[u] + v.second < dist[v.first]) {
+                    dist[v.first] = dist[u] + v.second;
+                    pq.push(make_pair(dist[v.first], v.first));
+                }
+            }
+        }
+
+        cout << "Shortest path from node " << src << ":\n";
+        for (int i = 0; i < SIZE; i++) {
+            cout << src << " -> " << i << " : " << dist[i] << "\n";
+        }
+    }
 };
 
 int main() {
@@ -100,6 +127,6 @@ int main() {
     graph.printGraph();
     graph.DFS(0);
     graph.BFS(0);
-
+    graph.shortestPath(0);
     return 0;
 }
