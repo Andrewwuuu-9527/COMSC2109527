@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <climits>
 #include <algorithm>
 using namespace std;
 
@@ -169,10 +170,29 @@ int main() {
     };
 
     Graph graph(edges);
-    graph.printGraph();
-    graph.DFS(0);
-    graph.BFS(0);
-    graph.shortestPath(0);
-    graph.findMST();
+    
+    int choice;
+    do {
+        cout << "\nCity Traffic Network Menu:\n";
+        cout << "[1] Display City Network\n";
+        cout << "[2] Dispatch Area Analysis (BFS)\n";
+        cout << "[3] Contamination Trace (DFS)\n";
+         cout << "[4] Calculate Shortest Paths\n";
+        cout << "[5] Find Minimum Spanning Tree\n";
+        cout << "[0] Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: graph.printGraph(); break;
+            case 2: graph.BFS(0); break;
+            case 3: graph.DFS(0); break;
+            case 4: graph.shortestPath(0); break;
+            case 5: graph.findMST(); break;
+            case 0: cout << "Exiting...\n"; break;
+            default: cout << "Invalid choice.\n";
+        }
+    } while (choice != 0);
+
     return 0;
 }
