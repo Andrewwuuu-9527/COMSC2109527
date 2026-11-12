@@ -13,6 +13,11 @@ struct Edge {
 
 typedef pair<int, int> Pair;
 
+string nodeNames[9] = {
+    "Downtown", "North Mall", "West Park", "South Station", "Airport",
+    "East Hospital", "University", "Tech Hub", "Industrial Zone"
+};
+
 class Graph {
     public:
         vector<vector<Pair>> adjList;
@@ -27,13 +32,13 @@ class Graph {
         }
 
         void printGraph() {
-            cout << "Graph adjacency list:" << endl;
+            cout << "City Traffic Network Topology:\n";
+            cout << "================================\n";
             for (int i = 0; i < adjList.size(); i++) {
-                cout << i << " --> ";
+                 cout << "Intersection " << i << " (" << nodeNames[i] << ") connects to:\n";
                 for (Pair v : adjList[i]) {
-                    cout << "(" << v.first << ", " << v.second << ") ";
+                    cout << "  -> Intersection " << v.first << " (" << nodeNames[v.first] << ") - Travel Time: " << v.second << " mins\n";
                 }
-                cout << endl;
             }
         }
 
@@ -49,7 +54,7 @@ class Graph {
 
             if (!visited[curr]) {
                 visited[curr] = true;
-                cout << curr << " ";
+                cout << nodeNames[curr] << " ";
                 // Push neighbors in reverse order to match sample output (visit smaller first)
                 for (auto it = adjList[curr].rbegin(); it != adjList[curr].rend(); ++it) {
                     if (!visited[it->first]) {
@@ -71,7 +76,7 @@ class Graph {
         while (!q.empty()) {
             int curr = q.front();
             q.pop();
-            cout << curr << " ";
+            cout << nodeNames[curr] << " ";
 
             for (Pair v : adjList[curr]) {
                 if (!visited[v.first]) {
