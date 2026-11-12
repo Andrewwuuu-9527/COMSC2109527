@@ -3,6 +3,7 @@
 #include <vector>
 #include <queue>
 #include <stack>
+#include <algorithm>
 using namespace std;
 
 const int SIZE = 9;
@@ -16,6 +17,23 @@ typedef pair<int, int> Pair;
 string nodeNames[9] = {
     "Downtown", "North Mall", "West Park", "South Station", "Airport",
     "East Hospital", "University", "Tech Hub", "Industrial Zone"
+};
+
+struct DSU {
+    vector<int> parent;
+    DSU(int n) {
+        parent.resize(n);
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    int find(int i) {
+        if (parent[i] == i) return i;
+        return parent[i] = find(parent[i]);
+    }
+    void unite(int i, int j) {
+        int root_i = find(i);
+        int root_j = find(j);
+        if (root_i != root_j) parent[root_i] = root_j;
+    }
 };
 
 class Graph {
@@ -114,6 +132,33 @@ class Graph {
             cout << src << " -> " << i << " : " << dist[i] << "\n";
         }
     }
+
+    void findMST() {
+        vector<Edge> allEdges;
+        for (int i = 0; i < SIZE; i++) {
+            for (Pair v : adjList[i]) {
+                if (i < v.first) { // avoid duplicates for undirected graph
+                    allEdges.push_back({i, v.first, v.second});
+                }
+            }
+        }
+
+        sort(allEdges.begin(), allEdges.end(), [](Edge a, Edge b) {
+            return a.weight < b.weight;
+        });
+
+        DSU dsu(SIZE);
+        cout << "Minimum Spanning Tree edges:\n";
+        int totalCost = 0;
+        for (Edge e : allEdges) {
+            if (dsu.find(e.src) != dsu.find(e.dest)) {
+                dsu.unite(e.src, e.dest);
+                cout << "Edge from " << e.src << " to " << e.dest << " with capacity: " << e.weight << " units\n";
+                totalCost += e.weight;
+            }
+        }
+        cout << "Total cost of Minimum Spanning Tree: " << totalCost << endl;
+    }
 };
 
 int main() {
@@ -128,5 +173,6 @@ int main() {
     graph.DFS(0);
     graph.BFS(0);
     graph.shortestPath(0);
+    graph.findMST();
     return 0;
 }
