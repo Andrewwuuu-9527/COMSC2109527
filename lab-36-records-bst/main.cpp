@@ -1,10 +1,15 @@
 // COMSC-210 | Lab 36 | Andrew
 #include <iostream>
 #include <string>
-#include "IntBinaryTree.h"
+#include "StringBinaryTree.h"
 using namespace std;
 
 int main() {
-    cout << "Lab 36 setup complete." << endl;
+    StringBinaryTree tree;
+    tree.insertNode("Apple");
+    tree.insertNode("Banana");
+    tree.insertNode("Cherry");
+    cout << "Test InOrder:\n";
+    tree.displayInOrder();
     return 0;
 }
